@@ -1,0 +1,4 @@
+    body {
+      margin: 0; /* Remove default browser margin */
+      margin-top: 56px; /* Offset for fixed navbar */
+    }

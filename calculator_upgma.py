@@ -13,22 +13,23 @@ class TreeBuilder:
         self.aligned_file = None
         self.dissimilarity_matrix = None
         self.tree = None
+        self.n_seq = 2
 
 
-    def align_sequences(self, *args):
+    def align_sequences(self, list1, list2):
         import os
 
-        # Step 1: Create a temporary FASTA file to hold the input sequences
+        # Create a temporary FASTA file to hold the input sequences
         with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix='.fasta') as temp_fasta:
-            for idx, seq in enumerate(args):
+            for seq in list2:
                 if isinstance(seq, str):
-                    seq = SeqRecord(Seq(seq), id=f"seq{idx}")
+                    seq = SeqRecord(Seq(seq), id=f"{list1[list2.index(seq)]}")
                 temp_fasta.write(f">{seq.id}\n{seq.seq}\n")
             temp_fasta_name = temp_fasta.name  # Save the temp file name
 
         print(f"Temporary FASTA file created at: {temp_fasta_name}")
 
-        # Step 2: Run ClustalW to align the sequences
+        # Run ClustalW to align the sequences
         output_aln = temp_fasta_name.replace('.fasta', '_aligned.aln')  # Define output file
         print(f"Expected output alignment file: {output_aln}")
 
@@ -46,7 +47,7 @@ class TreeBuilder:
             print(f"Error running ClustalW: {e}")
             return
 
-        # Step 3: Read the alignment from the generated .aln file
+        # Read the alignment from the generated .aln file
         try:
             alignment = AlignIO.read(output_aln, "clustal")
         except FileNotFoundError:
@@ -56,7 +57,7 @@ class TreeBuilder:
             print(f"Error reading alignment file: {e}")
             return
 
-        # Step 4: Print the aligned sequences
+        # Print the aligned sequences
         print("Aligned Sequences:")
         for record in alignment:
             print(f"{record.id}: {record.seq}")
@@ -85,7 +86,6 @@ class TreeBuilder:
 
         self.dissimilarity_matrix = distance_matrix
 
-        return distance_matrix
 
     def build_tree(self, method="upgma"):
         if self.dissimilarity_matrix is None:
@@ -106,7 +106,6 @@ class TreeBuilder:
 
         self.tree = tree
 
-        return tree
 
     def visualize_tree(self, output_file=None, output_format="png"):
         if self.tree is None:
@@ -129,6 +128,3 @@ class TreeBuilder:
         if output_file:
             plt.savefig(output_file, format=output_format, dpi=300)  # High resolution
             print(f"Tree saved to {output_file} in {output_format} format.")
-
-        # Show the plot (optional)
-        plt.show()

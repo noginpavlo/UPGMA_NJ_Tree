@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Sequence Input</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .sequence-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .add-button-container {
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .add-button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Red button for delete */
+    .delete-button {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      background-color: #dc3545; /* Bootstrap red color */
+      border-radius: 50%;
+      border: none;
+    }
+
+    /* Yellow button for clear */
+    .clear-button {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      background-color: #f0ad4e; /* Bootstrap yellow color */
+      border-radius: 50%;
+      border: none;
+    }
+
+    .scrollable-input {
+      overflow-y: scroll;
+      resize: none;
+      height: 100px;
+    }
+
+    .highlighted-link {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+
+    .highlighted-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Style for the Calculate button */
+    .calculate-button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .calculate-button {
+      width: 200px;
+      height: 50px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="d-flex justify-content-center py-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link active" aria-current="page">Home</a></li>
+      <li class="nav-item"><a href="{{ url_for('calculation_parameters') }}" class="nav-link">Get Started</a></li>
+      <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">How to Use</a></li>
+      <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Contact</a></li>
+      <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">About</a></li>
+    </ul>
+  </header>
+
+  <!-- Content Section -->
+  <div class="container my-4">
+    <h2 class="text-center mb-4">Input Sequences</h2>
+    <!-- Form for submitting sequences -->
+    <form id="sequence-form" method="POST" action="/submit_sequences">
+      <div id="sequence-container">
+        <!-- First Row (Static example) -->
+        <div class="sequence-row">
+          <input type="text" class="form-control" name="sequence_name[]" placeholder="Sequence Name" style="width: 150px;">
+          <textarea class="form-control scrollable-input" name="sequence_data[]" placeholder="Paste your sequence here"></textarea>
+          <button type="button" class="btn delete-button">
+            <i class="bi bi-trash"></i> <!-- Trash icon for delete -->
+          </button>
+          <button type="button" class="btn clear-button">
+            <i class="bi bi-arrow-clockwise"></i> <!-- Refresh icon for clear -->
+          </button>
+        </div>
+      </div>
+      <!-- Add Row Button -->
+      <div class="add-button-container">
+        <button type="button" class="btn btn-success add-button" id="add-button">+</button>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="calculate-button-container">
+        <button type="submit" class="btn btn-primary calculate-button" id="submit-button">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center py-3">
+    <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+    <a href="#" class="highlighted-link">Privacy Policy</a> | <a href="#" class="highlighted-link">Terms of Service</a>
+  </footer>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const sequenceContainer = document.getElementById('sequence-container');
+    const addButton = document.getElementById('add-button');
+
+    // Add Row Functionality
+    addButton.addEventListener('click', () => {
+      const newRow = document.createElement('div');
+      newRow.classList.add('sequence-row');
+
+      // Create the Sequence Name input
+      const sequenceNameInput = document.createElement('input');
+      sequenceNameInput.type = 'text';
+      sequenceNameInput.classList.add('form-control');
+      sequenceNameInput.name = 'sequence_name[]';  // Name attribute for dynamic input
+      sequenceNameInput.placeholder = 'Sequence Name';
+      sequenceNameInput.style.width = '150px';
+
+      // Create the Scrollable Sequence Text input
+      const sequenceTextInput = document.createElement('textarea');
+      sequenceTextInput.classList.add('form-control', 'scrollable-input');
+      sequenceTextInput.name = 'sequence_data[]';  // Name attribute for dynamic input
+      sequenceTextInput.placeholder = 'Paste your sequence here';
+
+      // Create the Delete Button
+      const deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.classList.add('btn', 'delete-button');
+      deleteButton.innerHTML = '<i class="bi bi-trash"></i>';
+
+      // Create the Clear Button
+      const clearButton = document.createElement('button');
+      clearButton.type = 'button';
+      clearButton.classList.add('btn', 'clear-button');
+      clearButton.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
+
+      // Append inputs and buttons to the new row
+      newRow.appendChild(sequenceNameInput);
+      newRow.appendChild(sequenceTextInput);
+      newRow.appendChild(deleteButton);
+      newRow.appendChild(clearButton);
+
+      // Append the new row to the container
+      sequenceContainer.appendChild(newRow);
+    });
+
+    // Event delegation for Delete and Clear buttons
+    sequenceContainer.addEventListener('click', function(e) {
+      // Handle Delete Button
+      if (e.target && e.target.classList.contains('delete-button')) {
+        const row = e.target.closest('.sequence-row');
+        if (row) {
+          row.remove();
+        }
+      }
+
+      // Handle Clear Button
+      if (e.target && e.target.classList.contains('clear-button')) {
+        const row = e.target.closest('.sequence-row');
+        if (row) {
+          const sequenceNameInput = row.querySelector('input');
+          const sequenceTextInput = row.querySelector('textarea');
+          sequenceNameInput.value = '';
+          sequenceTextInput.value = '';
+        }
+      }
+    });
+
+    // Prevent form submission for demonstration purposes
+    document.getElementById('sequence-form').addEventListener('submit', function (e) {
+      e.preventDefault(); // To prevent page refresh on submit
+      const formData = new FormData(this);
+
+      // Send form data to backend via fetch (AJAX)
+      fetch('/submit_sequences', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.text())
+      .then(data => {
+        console.log('Success:', data);
+        alert('Sequences submitted successfully!');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('There was an error submitting the data.');
+      });
+    });
+  </script>
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</body>
+</html>

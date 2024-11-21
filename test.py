@@ -12,8 +12,12 @@ ship = "AGCTGCCCTCTAAACACACACTGCT"
 mouse = "AGCTGCCCTCTAAACTGCTGAACT"
 turtle = "AGCTGCCCTCTAAACTGACTGCT"
 
+names = ["apple", "banana", "bee", "watermelon", "cat", "dog", "ship", "mouse", "turtle"]
+sequences = ["AGCTGAAACCCTCT", "AGCTGCCCTCT", "AGCTGCCCAAATCT", "AGCTGCCCTCTAAATCT", "AGCTGCCCTCTAAACTGCTGCTGCTG",
+             "AGCTGCCCTCTAAACACACACTGCT", "AGCTGCCCTCTAAACTGCTGAACT", "AGCTGCCCTCTAAACTGACTGCT", "ACGTAGCTAGCTAGCACTG"]
 
-calculator.align_sequences(apple, banana, bee, watermelon, cat, dog, ship, turtle, mouse)
+
+calculator.align_sequences(names, sequences)
 
 calculator.calculate_dissimilarity_matrix()
 
