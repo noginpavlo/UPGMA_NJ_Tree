@@ -21,7 +21,6 @@ def input_seq():
 
 @app.route('/submit_sequences', methods=['POST'])
 def submit_sequences():
-    # Get the sequence names and sequence data from the form
     sequence_names = request.form.getlist('sequence_name[]')
     sequence_data = request.form.getlist('sequence_data[]')
 
@@ -31,7 +30,6 @@ def submit_sequences():
     calculator.build_tree()
     calculator.visualize_tree()
 
-    # You can now perform any operations with the data, e.g., calculations
     return "Sequences submitted successfully!"
 
 
