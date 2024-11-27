@@ -1,17 +1,20 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from calculator_upgma import *
 
 
 app = Flask(__name__)
 calculator = TreeBuilder()
 
+
 @app.route("/home2")
 def home2():
     return render_template("index2.html")
 
+
 @app.route("/")
 def home():
     return render_template("home.html")
+
 
 @app.route("/parameters")
 def calculation_parameters():
@@ -21,6 +24,12 @@ def calculation_parameters():
 @app.route("/input")
 def input_seq():
     return render_template("input.html")
+
+
+@app.route("/result")
+def show_result():
+    print("Was called")
+    return render_template("result_tree.html")
 
 
 @app.route('/submit_sequences', methods=['POST'])
@@ -34,7 +43,7 @@ def submit_sequences():
     calculator.build_tree()
     calculator.visualize_tree()
 
-    return "Sequences submitted successfully!"
+    return redirect(url_for('show_result'))
 
 
 if __name__ == "__main__":

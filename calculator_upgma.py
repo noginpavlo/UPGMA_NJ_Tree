@@ -133,7 +133,7 @@ class TreeBuilder:
                 clade.name = None  # Remove the label of internal nodes
 
         # Create a new Matplotlib figure
-        fig = plt.figure(figsize=(12, 8))
+        fig = plt.figure(figsize=(18, 10))
         ax = fig.add_subplot(1, 1, 1)
 
 

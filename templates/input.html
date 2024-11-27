@@ -200,25 +200,27 @@
     });
 
     // Prevent form submission for demonstration purposes
-    document.getElementById('sequence-form').addEventListener('submit', function (e) {
-      e.preventDefault(); // To prevent page refresh on submit
-      const formData = new FormData(this);
+document.getElementById('sequence-form').addEventListener('submit', function (e) {
+    e.preventDefault();  // Prevents the form from submitting normally and refreshing the page
+    const formData = new FormData(this);  // Collects the form data
 
-      // Send form data to backend via fetch (AJAX)
-      fetch('/submit_sequences', {
+    // Send form data to the backend via fetch (AJAX)
+    fetch('/submit_sequences', {
         method: 'POST',
-        body: formData,
-      })
-      .then(response => response.text())
-      .then(data => {
+        body: formData,  // Sends the form data in the POST request
+    })
+    .then(response => response.text())  // Processes the response as text (which could be HTML or a message)
+    .then(data => {
         console.log('Success:', data);
-        alert('Sequences submitted successfully!');
-      })
-      .catch((error) => {
+        alert('Sequences submitted successfully!');  // Show alert
+        // After the alert is closed, redirect to the result page
+        window.location.href = '/result';
+    })
+    .catch((error) => {
         console.error('Error:', error);
         alert('There was an error submitting the data.');
-      });
     });
+});
   </script>
 
   <!-- Bootstrap Icons -->
