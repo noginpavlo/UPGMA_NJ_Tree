@@ -6,14 +6,9 @@ app = Flask(__name__)
 calculator = TreeBuilder()
 
 
-@app.route("/home2")
-def home2():
-    return render_template("index2.html")
-
-
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("index2.html")
 
 
 @app.route("/parameters")
@@ -44,6 +39,11 @@ def submit_sequences():
     calculator.visualize_tree()
 
     return redirect(url_for('show_result'))
+
+
+@app.route("/elements")
+def elements():
+    return render_template("elements.html")
 
 
 if __name__ == "__main__":
