@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parameter Input Area</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Make the container less wide by limiting its max-width */
+    .container {
+      max-width: 800px; /* Adjust this value as needed */
+    }
+
+    /* Optional: Style for Submit Buttons */
+    .btn-container {
+      display: flex;
+      justify-content: flex-start; /* Position buttons to the left */
+      gap: 10px; /* Space between buttons */
+    }
+  </style>
+</head>
+<body>
+  <!-- Input Area -->
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        Input Parameters
+      </div>
+      <div class="card-body">
+        <form>
+          <!-- Calculation Method -->
+          <div class="mb-3">
+            <label class="form-label">Choose Calculation Method:</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="calculationMethod" id="upgma" value="UPGMA" checked>
+                <label class="form-check-label" for="upgma">UPGMA</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="calculationMethod" id="nj" value="NJ">
+                <label class="form-check-label" for="nj">Neighbor Joining</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Type -->
+          <div class="mb-3">
+            <label class="form-label">Input Data Type:</label>
+            <div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="inputType" id="fastaFile" value="file" checked>
+                <label class="form-check-label" for="fastaFile">Upload FASTA File</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="inputType" id="sequences" value="sequences">
+                <label class="form-check-label" for="sequences">Copy and Paste Your Sequences</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- File Upload Section -->
+          <div class="mb-3" id="fileUploadSection">
+            <label for="fastaUpload" class="form-label">Upload FASTA File:</label>
+            <input type="file" class="form-control" id="fastaUpload" accept=".fasta">
+          </div>
+
+          <!-- Sequence Count Section -->
+          <div class="mb-3 d-none" id="sequenceCountSection">
+          </div>
+
+          <!-- Submit Button Placeholder for Dynamic Behavior -->
+          <div id="submitButtonSection" class="mt-4 btn-container">
+            <!-- Initially empty, buttons will be added dynamically -->
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // JavaScript for Dynamic Behavior
+    const fastaFileRadio = document.getElementById('fastaFile');
+    const sequencesRadio = document.getElementById('sequences');
+    const fileUploadSection = document.getElementById('fileUploadSection');
+    const sequenceCountSection = document.getElementById('sequenceCountSection');
+    const submitButtonSection = document.getElementById('submitButtonSection');
+
+    // Handle file upload selection
+    fastaFileRadio.addEventListener('change', () => {
+      if (fastaFileRadio.checked) {
+        fileUploadSection.classList.remove('d-none');
+        sequenceCountSection.classList.add('d-none');
+        updateSubmitButtons('calculate'); // Update button based on selection
+      }
+    });
+
+    // Handle sequences input selection
+    sequencesRadio.addEventListener('change', () => {
+      if (sequencesRadio.checked) {
+        sequenceCountSection.classList.remove('d-none');
+        fileUploadSection.classList.add('d-none');
+        updateSubmitButtons('inputSequences'); // Update button based on selection
+      }
+    });
+
+    // Function to update the buttons based on the selection
+    function updateSubmitButtons(type) {
+      submitButtonSection.innerHTML = ''; // Clear current buttons
+
+      if (type === 'calculate') {
+        // Create the 'Calculate' button
+        const calculateButton = document.createElement('a');
+        calculateButton.href = "{{ url_for('home') }}"; // Replace with actual href for "Calculate"
+        calculateButton.classList.add('btn', 'btn-success', 'me-2');
+        calculateButton.textContent = 'Calculate';
+        submitButtonSection.appendChild(calculateButton);
+      } else if (type === 'inputSequences') {
+        // Create the 'Input Sequences' button
+        const inputSequencesButton = document.createElement('a');
+        inputSequencesButton.href = "{{ url_for('input_seq') }}"; // Replace with actual href for "Input Sequences"
+        inputSequencesButton.classList.add('btn', 'btn-success', 'me-2');
+        inputSequencesButton.textContent = 'Input Sequences';
+        submitButtonSection.appendChild(inputSequencesButton);
+      }
+    }
+
+    // Simulate a click on the "Upload FASTA File" radio button on page load to show the "Calculate" button
+    window.onload = function() {
+      if (fastaFileRadio.checked) {
+        updateSubmitButtons('calculate');
+      }
+    };
+  </script>
+</body>
+</html>

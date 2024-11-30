@@ -133,21 +133,19 @@ class TreeBuilder:
                 clade.name = None  # Remove the label of internal nodes
 
         # Create a new Matplotlib figure
-        fig = plt.figure(figsize=(18, 10))
+        fig = plt.figure(figsize=(18, 12))
         ax = fig.add_subplot(1, 1, 1)
 
 
         Phylo.draw(self.tree, axes=ax, do_show=False,
                    branch_labels=lambda c: f"{c.branch_length:.3f}" if c.branch_length != 0 else None)
 
-        # Now, let's modify the font size and style of the terminal clade labels (only words)
-        for text in ax.texts:  # 'ax.texts' contains all the text objects (labels)
-            label_text = text.get_text()  # Get the actual text from the label
-
-            if label_text.isalpha():  # Check if the text is a word (no digits)
-                text.set_fontsize(24)  # Change font size for words only
-                text.set_fontname('Arial')  # Change font style for words only
-                text.set_color('blue')  # Change text color for words only
+        for text in ax.texts:
+            if text.get_text():
+                text.set_fontsize(24)
+                text.set_fontname('Times New Roman')
+                text.set_weight('bold')
+                text.set_color('red')
 
         plt.savefig(output_file, format=output_format, dpi=300)  # High resolution
         print(f"Tree saved to {output_file} in {output_format} format.")
