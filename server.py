@@ -46,5 +46,15 @@ def elements():
     return render_template("elements.html")
 
 
+@app.route("/inp")
+def new_input():
+    return render_template("input2.html")
+
+
+@app.route("/button")
+def button():
+    return render_template("button.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

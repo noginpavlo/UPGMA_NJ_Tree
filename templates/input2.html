@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<!-- Frontend template info
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Treesome by HIGHLANDER-95</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}" />
+	</head>
+
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index2.html" class="logo"><strong>Treesome</strong> by HIGHLANDER-95</a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="#" class="icon brands fa-telegram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+								<div id="input_card" class="card">
+									<div class="row gtr-uniform">
+										<div class="col-3 col-12-small">
+											<input type="text" name="demo-name" id="demo-name" value="" placeholder="Name">
+										</div>
+										<div class="col-8 col-12-small">
+											<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+										</div>
+										<div class="col-1 col-12-small">
+											<button class="red-round-button">
+												<i class="icon solid fa-trash-alt"></i>
+											</button>
+											<button class="yellow-round-button">
+												<i class="icon solid fa-recycle"></i>
+											</button>
+									</div>
+									</div>
+								</div>
+								<div id="calculate_button_div">
+									<a href="#" id="card_button" class="button primary fit">Build tree</a>
+								</div>
+						</div>
+					</div>
+			</div>
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="{{ url_for('home') }}">Homepage</a></li>
+										<li><a href="{{ url_for('calculation_parameters') }}">Build your tree</a></li>
+										<li><a href="{{ url_for('home') }}">How to use</a></li>
+										<li>
+											<span class="opener">Theory</span>
+											<ul>
+												<li><a href="#">Hierarchical clustering methods</a></li>
+												<li><a href="#">UPGMA</a></li>
+												<li><a href="#">Neighbor-Joining(NJ)</a></li>
+												<li><a href="#">UPGMA or NJ</a></li>
+											</ul>
+										</li>
+										<li><a href="#">About</a></li>
+									</ul>
+								</nav>
+							 <!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p>If you encounter any issues while using the web app, feel free to reach out to me via email to report the problem. I’m also open to collaboration opportunities in Sweden. Let's get in touch!</p>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="#">nohinpavlo@gmail.com</a></li>
+										<li class="icon solid fa-user">I'm Nohin Pavlo</li>
+										<li class="icon solid fa-home">Sweden, Uppsala</li>
+										<li class="icon solid fa-phone">+46 76 715 28 73</li>
+									</ul>
+								</section>
+								<!-- Footer -->
+									<footer id="footer">
+										<p class="copyright">&copy; Untitled. All rights reserved.<br> Design by <a href="https://html5up.net">HTML5 UP</a>.</p>
+									</footer>
+						</div>
+					</div>
+				<!-- Scripts -->
+	<script src="{{ url_for('static', filename='/js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='/js/browser.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='/js/breakpoints.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='/js/util.js') }}"></script>
+	<script src="{{ url_for('static', filename='/js/main.js') }}"></script>
+</body>
