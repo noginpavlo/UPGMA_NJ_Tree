@@ -18,12 +18,12 @@ def calculation_parameters():
 
 @app.route("/input")
 def input_seq():
-    return render_template("input.html")
+    return render_template("input2.html")
 
 
-@app.route("/result")
+@app.route("/show_result")
 def show_result():
-    print("Was called")
+    print("Was called let's fucing go")
     return render_template("result_tree.html")
 
 

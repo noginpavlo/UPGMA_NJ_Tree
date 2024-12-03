@@ -2419,15 +2419,6 @@ label.button:hover {
 }
 
 
-
-
-
-
-
-
-
-
-
 /* Reset button styles */
 button {
   padding: 0 !important;
@@ -2439,8 +2430,8 @@ button {
 
 /* delete button*/
 .red-round-button {
-  width: 50px; /* Width of the button */
-  height: 50px; /* Height of the button */
+  width: 45px; /* Width of the button */
+  height: 45px; /* Height of the button */
   border-radius: 50%; /* Perfect circle */
   background-color: #B8001F; /* Button color */
   color: white; /* Icon color */
@@ -2465,10 +2456,10 @@ button {
 
 /* reset button*/
 .yellow-round-button {
-  width: 50px; /* Width of the button */
-  height: 50px; /* Height of the button */
+  width: 45px; /* Width of the button */
+  height: 45px; /* Height of the button */
   border-radius: 50%; /* Perfect circle */
-  background-color: #FFE31A; /* Button color */
+  background-color: white; /* Button color */
   color: white; /* Icon color */
   display: flex;
   align-items: center;
@@ -2479,11 +2470,30 @@ button {
 
 /* Hover delete button */
 .yellow-round-button:hover {
-  background-color: #F09319; /* Darker shade when hovered */
+  background-color: #grey; /* Darker shade when hovered */
   transform: scale(1.1); /* Slightly enlarge the button */
 }
 
 /* Fa delete button icon style */
 .yellow-round-button i {
   margin: 0 !important;
+}
+
+#add-button {
+    width: 60px !important;
+    height: 60px !important;
+    margin-left: 30px;
+}
+
+#add-button-div {
+   display: flex;
+   justify-content: center;
+}
+
+input::placeholder {
+    color: #aaa; /* Lighter color for the placeholder */
+}
+
+input:focus::placeholder {
+    color: transparent; /* Makes the placeholder text disappear when the input is focused */
 }
