@@ -23,7 +23,6 @@ def input_seq():
 
 @app.route("/show_result")
 def show_result():
-    print("Was called let's fucing go")
     return render_template("result_tree.html")
 
 
@@ -51,9 +50,9 @@ def new_input():
     return render_template("input2.html")
 
 
-@app.route("/button")
-def button():
-    return render_template("button.html")
+@app.route("/theory")
+def theory_section():
+    return render_template("theory.html")
 
 
 if __name__ == "__main__":
