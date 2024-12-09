@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.12 (UPGMA)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (UPGMA)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (UPGMA_NJ_Tree)" project-jdk-type="Python SDK" />
 </project>
