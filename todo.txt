@@ -1,0 +1,12 @@
+Plans for 11-12-2024
+
+1. I want to thik on how to make file input work and build a tree
+
+1.1 To do that I need to pass the file directly to sequence alignment function in case of FASTA input
+1.2 In case of Excel file format inpput I need to pass the data directly to dissimilarity_matrix() function,
+ as it assumes user's manual alignment
+------------
+
+2. After that I need th think about how to make calculations perform in a separate thread.
+
+2.1 To do that I need to build the file accepting part first

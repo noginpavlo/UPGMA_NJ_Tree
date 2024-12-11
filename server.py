@@ -6,6 +6,12 @@ app = Flask(__name__)
 calculator = TreeBuilder()
 
 
+# Configure upload folder
+UPLOAD_FOLDER = 'static/uploads'  # Directory to save uploaded files
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 @app.route("/")
 def home():
     return render_template("index2.html")
@@ -28,9 +34,12 @@ def show_result():
 
 @app.route('/submit_sequences', methods=['POST'])
 def submit_sequences():
+
     sequence_names = request.form.getlist('sequence_name[]')
     sequence_data = request.form.getlist('sequence_data[]')
 
+    file = request.files['file']
+    print(file)
 
     calculator.align_sequences(sequence_names, sequence_data)
     calculator.calculate_dissimilarity_matrix()
