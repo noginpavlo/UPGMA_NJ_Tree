@@ -37,7 +37,7 @@ class TreeBuilder:
         print(f"Expected output alignment file: {output_aln}")
 
         clustal_command = [
-            '/opt/miniconda3/envs/bioinfo/bin/clustalw',
+            '/usr/bin/clustalw',
             f'-INFILE={temp_fasta_name}',
             f'-OUTFILE={output_aln}',
             '-ALIGN'
