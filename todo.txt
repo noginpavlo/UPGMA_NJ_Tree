@@ -2,11 +2,22 @@ Plans for 11-12-2024
 
 1. I want to thik on how to make file input work and build a tree
 
-1.1 To do that I need to pass the file directly to sequence alignment function in case of FASTA input
-1.2 In case of Excel file format inpput I need to pass the data directly to dissimilarity_matrix() function,
+1.1 To do that I need to pass the file directly to sequence alignment function
+ in case of FASTA input
+1.2 In case of Excel file format inpput I need to pass the data directly to dissimilarity_matrix() function
  as it assumes user's manual alignment
 ------------
 
 2. After that I need th think about how to make calculations perform in a separate thread.
 
 2.1 To do that I need to build the file accepting part first
+
+I basically did nothin of the above. Good luck tommarow! 
+
+Plans for 12-12-2-24
+
+3.1 I have realized that I actually need to send a responce to Flask backend that contains file.
+ It is challenging to do because of that <a> tag which serves as a button. I need to figure out how to pass
+the file using JavaScript other than regular request responce via POST.
+
+
