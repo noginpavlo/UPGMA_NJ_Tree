@@ -80,5 +80,10 @@ def theory_section():
     return render_template("theory.html")
 
 
+@app.route("/docs")
+def documentation():
+    return render_template("docs.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
