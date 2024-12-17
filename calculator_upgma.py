@@ -19,18 +19,27 @@ class TreeBuilder:
         self.n_seq = 2
 
 
-    def align_sequences(self, list1, list2):
+    def align_sequences(self, list1=None, list2=None, fasta_file=None):
         import os
 
-        # Create a temporary FASTA file to hold the input sequences
-        with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix='.fasta') as temp_fasta:
-            for seq in list2:
-                if isinstance(seq, str):
-                    seq = SeqRecord(Seq(seq), id=f"{list1[list2.index(seq)]}")
-                temp_fasta.write(f">{seq.id}\n{seq.seq}\n")
-            temp_fasta_name = temp_fasta.name  # Save the temp file name
+        if not (list1 and list2) and not fasta_file:
+            raise ValueError("No data passed to align_sequences")
 
-        print(f"Temporary FASTA file created at: {temp_fasta_name}")
+        elif list1 and list2:
+            # Create a temporary FASTA file to hold the input sequences
+            with tempfile.NamedTemporaryFile(delete=False, mode='w', suffix='.fasta') as temp_fasta:
+                for seq in list2:
+                    if isinstance(seq, str):
+                        seq = SeqRecord(Seq(seq), id=f"{list1[list2.index(seq)]}")
+                    temp_fasta.write(f">{seq.id}\n{seq.seq}\n")
+                temp_fasta_name = temp_fasta.name  # Save the temp file name
+
+            print(f"Temporary FASTA file created at: {temp_fasta_name}")
+        elif fasta_file:
+            # Use the provided FASTA file directly
+            print("Elif statment triggered")
+            temp_fasta_name = fasta_file
+            print(f"Using provided FASTA file: {temp_fasta_name}")
 
         # Run ClustalW to align the sequences
         output_aln = temp_fasta_name.replace('.fasta', '_aligned.aln')  # Define output file
@@ -142,8 +151,7 @@ class TreeBuilder:
 
         for text in ax.texts:
             if text.get_text():
-                text.set_fontsize(24)
-                text.set_fontname('Times New Roman')
+                text.set_fontsize(20)
                 text.set_weight('bold')
                 text.set_color('red')
 

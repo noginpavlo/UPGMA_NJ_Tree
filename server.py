@@ -38,10 +38,26 @@ def submit_sequences():
     sequence_names = request.form.getlist('sequence_name[]')
     sequence_data = request.form.getlist('sequence_data[]')
 
-    file = request.files['file']
-    print(file)
-
     calculator.align_sequences(sequence_names, sequence_data)
+    calculator.calculate_dissimilarity_matrix()
+    calculator.build_tree()
+    calculator.visualize_tree()
+
+    return redirect(url_for('show_result'))
+
+
+@app.route('/submit_file', methods=['POST'])
+def submit_file():
+
+    file = request.files['file-upload']
+
+    # Save the uploaded file
+    upload_dir = "static/uploads"  # Directory to save files
+    os.makedirs(upload_dir, exist_ok=True)  # Ensure the directory exists
+    file_path = os.path.join(upload_dir, file.filename)
+    file.save(file_path)
+
+    calculator.align_sequences(fasta_file=file_path)
     calculator.calculate_dissimilarity_matrix()
     calculator.build_tree()
     calculator.visualize_tree()

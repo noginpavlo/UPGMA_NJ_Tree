@@ -165,45 +165,81 @@
   <script src="{{ url_for('static', filename='/js/main.js') }}"></script>
 
   <!-- Script for displaying the filename in textfield -->
-  <script>
-    // JavaScript to update the input field with the file name
-    const fileInput = document.getElementById('file-upload');
-    const fileDescription = document.getElementById('file-description');
-    const dataTypeSelect = document.getElementById('demo-category');
-    const fileUploadSection = document.getElementById('file-upload-section');
-    const submitButton = document.getElementById('submit-button');
+ <script>
+// JavaScript to update the input field with the file name
+const fileInput = document.getElementById('file-upload');
+const fileDescription = document.getElementById('file-description');
+const dataTypeSelect = document.getElementById('demo-category');
+const fileUploadSection = document.getElementById('file-upload-section');
+const submitButton = document.getElementById('submit-button');
 
-    fileInput.addEventListener('change', () => {
-      // Check if a file is selected
-      if (fileInput.files.length > 0) {
-        fileDescription.value = fileInput.files[0].name; // Set the file name in the input
-      } else {
-        fileDescription.value = ''; // Reset the input field if no file is selected
-        fileDescription.placeholder = "Upload your file here"; // Reset placeholder
+fileInput.addEventListener('change', () => {
+  // Check if a file is selected
+  if (fileInput.files.length > 0) {
+    fileDescription.value = fileInput.files[0].name; // Set the file name in the input
+  } else {
+    fileDescription.value = ''; // Reset the input field if no file is selected
+    fileDescription.placeholder = "Upload your file here"; // Reset placeholder
+  }
+});
+
+// Function to handle changes in the selected input type
+dataTypeSelect.addEventListener('change', function () {
+  const selectedValue = this.value;
+
+  if (selectedValue === '1' || selectedValue === '2') {
+    // Show file upload section for FASTA or Excel files
+    fileUploadSection.style.display = 'block';
+  } else {
+    // Hide file upload section if "Manual sequence input" is selected
+    fileUploadSection.style.display = 'none';
+  }
+
+  // Change the submit button text and href based on input type selection
+  if (selectedValue === '3') {
+    submitButton.textContent = 'Input sequences';
+    submitButton.href = "{{ url_for('input_seq') }}"; // Redirect to manual input route
+  } else {
+    submitButton.textContent = 'Calculate';
+    submitButton.href = "#"; // Ensure file upload functionality remains intact
+  }
+});
+
+// Handle form submission when the submit button is clicked
+submitButton.addEventListener('click', function (e) {
+  const selectedValue = dataTypeSelect.value;
+
+  if (selectedValue === '1' || selectedValue === '2') {
+    e.preventDefault(); // Prevent default anchor behavior
+
+    const formData = new FormData();
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    formData.append('file-upload', file);
+
+    // Use jQuery's AJAX to send the file data
+    $.ajax({
+      url: '/submit_file',  // Endpoint where the form is submitted
+      type: 'POST',
+      data: formData,
+      processData: false,  // Tell jQuery not to process the data
+      contentType: false,  // Tell jQuery not to set content type, it's handled by FormData
+      success: function(response) {
+        // Redirect manually after successful upload
+        window.location.href = '/show_result'; // This handles the redirect
+      },
+      error: function(xhr, status, error) {
+        console.error(error);
+        alert("An error occurred during file upload.");
       }
     });
-
-    // Function to handle changes in the selected input type
-    dataTypeSelect.addEventListener('change', function () {
-      const selectedValue = this.value;
-
-      if (selectedValue === '1' || selectedValue === '2') {
-        // Show file upload section for FASTA or Excel files
-        fileUploadSection.style.display = 'block';
-      } else {
-        // Hide file upload section if "Manual sequence input" is selected
-        fileUploadSection.style.display = 'none';
-      }
-
-      // Change the submit button text and href based on input type selection
-      if (selectedValue === '3') {
-        submitButton.textContent = 'Input sequences';
-        submitButton.href = "{{ url_for('input_seq') }}"; // Redirect to manual input route
-      } else {
-        submitButton.textContent = 'Calculate';
-        submitButton.href = "{{ url_for('home') }}"; // Redirect to home route for FASTA/Excel
-      }
-    });
-  </script>
+  }
+});
+</script>
 </body>
 </html>
