@@ -27,3 +27,16 @@ Plans for 17-12-2024
 doesn't change the button functionality in accordance with data input option. FIX THAT.
 
 4.2 If 4.1 fixed, then handle the file input tree building functionality. Make it work and call it a day.
+
+
+Plans for 21-12-2024
+
+5. I need to pass excel file to backend. How do I do that?
+
+5.1. I need to check if the file .xls or .fasta. I will do in in Flask function submit_file(). I will check
+what  extention does the file have and create an if-elif statments. If .fasta, no change. Elif .xls I will reformat
+the file by triggering a new method that I will create withing calcularor class.
+
+5.2. I need to create a function that reconfigures the file in calculator_upgma file. This function will reqonfigure
+the file and save it as self.align_file atribute. Then this atribute is used inside dissimilaryty_matrix()
+function to perform futher calculations.

@@ -1,4 +1,5 @@
 import subprocess
+import pandas as pd
 import tempfile
 from Bio import AlignIO
 from Bio.Seq import Seq
@@ -20,7 +21,6 @@ class TreeBuilder:
 
 
     def align_sequences(self, list1=None, list2=None, fasta_file=None):
-        import os
 
         if not (list1 and list2) and not fasta_file:
             raise ValueError("No data passed to align_sequences")
@@ -62,6 +62,10 @@ class TreeBuilder:
         # Read the alignment from the generated .aln file
         try:
             alignment = AlignIO.read(output_aln, "clustal")
+            print("OUTPUT ALN !!!!!!!!!!!!")
+            print(output_aln)
+            print(type(output_aln))
+
         except FileNotFoundError:
             print(f"Alignment file not found: {output_aln}")
             return
@@ -69,6 +73,7 @@ class TreeBuilder:
             print(f"Error reading alignment file: {e}")
             return
 
+        print(alignment)
         # Print the aligned sequences
         print("Aligned Sequences:")
         for record in alignment:
@@ -79,6 +84,59 @@ class TreeBuilder:
         # Clean up temporary files
         os.remove(temp_fasta_name)
         os.remove(output_aln)
+
+
+    def reformat(self, xls_file_path):
+
+        """
+        Processes an Excel file to store aligned data in a variable and create a formatted file.
+
+        :param xls_file_path: Path to the Excel file.
+        :return: Aligned data as a string.
+        """
+        try:
+            # Read the Excel file into a DataFrame
+            data = pd.read_excel(xls_file_path)
+
+            # Remove the first row
+            data = data.iloc[0:, :]
+
+            # Get the number of rows and columns
+            num_rows, num_columns = data.shape
+
+            # Create the header line
+            header = f"Alignment with {num_rows} rows and {num_columns} columns"
+
+            # Initialize a list to store formatted lines
+            aligned_lines = [header]
+
+            # Iterate through each row
+            for _, row in data.iterrows():
+                # Merge 2nd-to-last columns
+                merged_columns = ''.join(map(str, row.iloc[1:].values))
+
+                # Replace 1 with A and 0 with T in the merged part
+                merged_columns = merged_columns.replace('1', 'A').replace('0', 'T')
+
+                # Add the first column content without spaces
+                formatted_line = f"{merged_columns} {row.iloc[0].replace(' ', '')}"
+                aligned_lines.append(formatted_line)
+
+            # Join the lines into a single string
+            aligned_data = '\n'.join(aligned_lines)
+
+            # Save the aligned data to a file
+            output_path = "static/uploads/sequence_aligned.aln"
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            with open(output_path, 'w') as file:
+                file.write(aligned_data)
+
+            self.aligned_file = aligned_data
+
+
+        except Exception as e:
+            print(f"Error processing file: {e}")
+            return None
 
 
     def calculate_dissimilarity_matrix(self):
@@ -151,7 +209,7 @@ class TreeBuilder:
 
         for text in ax.texts:
             if text.get_text():
-                text.set_fontsize(20)
+                text.set_fontsize(14)
                 text.set_weight('bold')
                 text.set_color('red')
 

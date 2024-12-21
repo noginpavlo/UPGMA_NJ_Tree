@@ -57,10 +57,23 @@ def submit_file():
     file_path = os.path.join(upload_dir, file.filename)
     file.save(file_path)
 
-    calculator.align_sequences(fasta_file=file_path)
-    calculator.calculate_dissimilarity_matrix()
-    calculator.build_tree()
-    calculator.visualize_tree()
+    # Check file extensions
+    if file.filename.lower().endswith('.fasta'):
+        # Handle FASTA file
+        calculator.align_sequences(fasta_file=file_path)
+        calculator.calculate_dissimilarity_matrix()
+        calculator.build_tree()
+        calculator.visualize_tree()
+    elif file.filename.lower().endswith(('.xls', '.xlsx')):
+        # Handle Excel file
+        calculator.reformat(file_path)
+        calculator.calculate_dissimilarity_matrix()
+        calculator.build_tree()
+        calculator.visualize_tree()
+    else:
+        # Handle unsupported file types (optional)
+        return "Unsupported file type", 400
+
 
     return redirect(url_for('show_result'))
 
