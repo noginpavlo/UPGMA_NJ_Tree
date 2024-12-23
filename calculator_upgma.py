@@ -160,7 +160,7 @@ class TreeBuilder:
         self.dissimilarity_matrix = distance_matrix
 
 
-    def build_tree(self, method="upgma"):
+    def build_tree(self, method):
         if self.dissimilarity_matrix is None:
             print("No distance matrix available. Run calculate_dissimilarity_matrix first.")
             return

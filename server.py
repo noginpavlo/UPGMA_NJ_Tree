@@ -11,6 +11,16 @@ UPLOAD_FOLDER = 'static/uploads'  # Directory to save uploaded files
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+method = None
+
+@app.route("/get-method", methods=['POST'])
+def get_method():
+    global method
+    response = request.form.getlist('method')
+    method = response[0]
+    print(f"Now method used is {method}")
+    return 'Method updated successfully', 200
+
 
 @app.route("/")
 def home():
@@ -40,7 +50,7 @@ def submit_sequences():
 
     calculator.align_sequences(sequence_names, sequence_data)
     calculator.calculate_dissimilarity_matrix()
-    calculator.build_tree()
+    calculator.build_tree(method)
     calculator.visualize_tree()
 
     return redirect(url_for('show_result'))
@@ -62,13 +72,13 @@ def submit_file():
         # Handle FASTA file
         calculator.align_sequences(fasta_file=file_path)
         calculator.calculate_dissimilarity_matrix()
-        calculator.build_tree()
+        calculator.build_tree(method)
         calculator.visualize_tree()
     elif file.filename.lower().endswith(('.xls', '.xlsx')):
         # Handle Excel file
         calculator.reformat(file_path)
         calculator.calculate_dissimilarity_matrix()
-        calculator.build_tree()
+        calculator.build_tree(method)
         calculator.visualize_tree()
     else:
         # Handle unsupported file types (optional)
