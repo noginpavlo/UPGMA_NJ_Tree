@@ -2519,3 +2519,9 @@ input:focus::placeholder {
 html {
   scroll-behavior: smooth;
 }
+
+.docs-h2-text {
+    text-align: center;
+    color: #E4003A;
+}
+

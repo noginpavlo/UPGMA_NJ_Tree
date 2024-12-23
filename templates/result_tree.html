@@ -21,9 +21,9 @@
                     <header id="header">
                         <a href="index.html" class="logo"><strong>Cladevo</strong> by HIGHLANDER-95</a>
                         <ul class="icons">
-                            <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-                            <li><a href="#" class="icon brands fa-telegram"><span class="label">Instagram</span></a></li>
-                            <li><a href="#" class="icon brands fa-instagram"><span class="label">Medium</span></a></li>
+                            <li><a href="https://github.com/noginpavlo" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                            <li><a href="https://t.me/highlender0302" class="icon brands fa-telegram" target="_blank"><span class="label">Instagram</span></a></li>
+                            <li><a href="https://www.instagram.com/2seconds5pictures/" class="icon brands fa-instagram" target="_blank"><span class="label">Medium</span></a></li>
                         </ul>
                     </header>
                     <!-- Content -->
@@ -55,14 +55,14 @@
 									<ul>
 										<li><a href="{{ url_for('home') }}">Homepage</a></li>
 										<li><a href="{{ url_for('calculation_parameters') }}">Build your tree</a></li>
-										<li><a href="{{ url_for('home') }}">How to use</a></li>
+										<li><a href="{{ url_for('documentation') }}">How to use</a></li>
 										<li>
 											<span class="opener">Theory</span>
 											<ul>
-												<li><a href="#">Hierarchical clustering methods</a></li>
-												<li><a href="#">UPGMA</a></li>
-												<li><a href="#">Neighbor-Joining(NJ)</a></li>
-												<li><a href="#">UPGMA or NJ</a></li>
+												<li><a href="{{ url_for('theory_section') }}#clustering">Hierarchical clustering methods</a></li>
+                                                <li><a href="{{ url_for('theory_section') }}#upgma">UPGMA</a></li>
+                                                <li><a href="{{ url_for('theory_section') }}#nj">Neighbor-Joining(NJ)</a></li>
+                                                <li><a href="{{ url_for('theory_section') }}#upgma-vs-nj">UPGMA or NJ</a></li>
 											</ul>
 										</li>
 										<li><a href="#">About</a></li>

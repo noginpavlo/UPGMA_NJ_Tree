@@ -108,5 +108,10 @@ def documentation():
     return render_template("docs.html")
 
 
+@app.route("/test_youtube")
+def test_youtube():
+    return render_template("test_youtube.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -40,3 +40,14 @@ the file by triggering a new method that I will create withing calcularor class.
 5.2. I need to create a function that reconfigures the file in calculator_upgma file. This function will reqonfigure
 the file and save it as self.align_file atribute. Then this atribute is used inside dissimilaryty_matrix()
 function to perform futher calculations.
+
+Plans for 23-12-2024
+
+6. Basic functionality is complete. Things that are still needed to adress: 
+--Make it calcualte things in a sepatrate thread! 
+--Consider adding user authentification.
+--Make the thing responcive. 
+--Consider making the pic text of a different colour. 
+--Consider adding more things to show_result.html page. (Like dissimilarity matrix for example.)
+
+6.1 Perform general overview and plan some future changes.
