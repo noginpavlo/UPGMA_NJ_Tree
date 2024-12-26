@@ -36,16 +36,12 @@ class TreeBuilder:
                     temp_fasta.write(f">{seq.id}\n{seq.seq}\n")
                 temp_fasta_name = temp_fasta.name  # Save the temp file name
 
-            # print(f"Temporary FASTA file created at: {temp_fasta_name}")
         elif fasta_file:
             # Use the provided FASTA file directly
-            # print("Elif statment triggered")
             temp_fasta_name = fasta_file
-            # print(f"Using provided FASTA file: {temp_fasta_name}")
 
         # Run ClustalW to align the sequences
         output_aln = temp_fasta_name.replace('.fasta', '_aligned.aln')  # Define output file
-        # print(f"Expected output alignment file: {output_aln}")
 
         clustal_command = [
             '/usr/bin/clustalw',
@@ -64,26 +60,13 @@ class TreeBuilder:
         # Read the alignment from the generated .aln file
         try:
             alignment = AlignIO.read(output_aln, "clustal")
-            # print("OUTPUT ALN !!!!!!!!!!!!")
-            # print(output_aln)
-            # print(type(output_aln))
 
         except FileNotFoundError:
-            # print(f"Alignment file not found: {output_aln}")
+            print(f"Alignment file not found: {output_aln}")
             return
-        except Exception as e:
-            # print(f"Error reading alignment file: {e}")
-            return
-
-        # print(alignment)
-        # Print the aligned sequences
-        # print("Aligned Sequences:")
-        # for record in alignment:
-        #     print(f"{record.id}: {record.seq}")
 
         self.aligned_file = alignment
 
-        # Clean up temporary files
         os.remove(temp_fasta_name)
         os.remove(output_aln)
 
@@ -155,8 +138,8 @@ class TreeBuilder:
         calculator = DistanceCalculator("identity")
         distance_matrix = calculator.get_distance(self.aligned_file)
 
-        # print("\nDissimilarity Matrix:")
-        # print(distance_matrix)
+        print("\nDissimilarity Matrix:")
+        print(distance_matrix)
 
         self.dissimilarity_matrix = distance_matrix
 
@@ -216,7 +199,6 @@ class TreeBuilder:
             if text.get_text():
                 text.set_fontsize(14)
                 text.set_weight('bold')
-                text.set_color('red')
 
         # Save the tree image
         plt.savefig(output_file, format=output_format, dpi=300)  # High resolution
