@@ -14,11 +14,13 @@ Plans for 11-12-2024
 
 I basically did nothin of the above. Good luck tomorow! 
 
+
 Plans for 12-12-2-24
 
 3.1 I have realized that I actually need to send a responce to Flask backend that contains file.
  It is challenging to do because of that <a> tag which serves as a button. I need to figure out how to pass
 the file using JavaScript other than regular request responce via POST.
+
 
 Plans for 17-12-2024
 
@@ -51,3 +53,8 @@ Plans for 23-12-2024
 --Consider adding more things to show_result.html page. (Like dissimilarity matrix for example.)
 
 6.1 Perform general overview and plan some future changes.
+
+
+Plans for 26-12-2024
+
+7. Fix that f* buggggg. Revert to 6. Make some changes, if you have time.

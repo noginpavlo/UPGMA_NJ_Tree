@@ -250,15 +250,19 @@
 
         // Use jQuery's AJAX to send the file data
         $.ajax({
-          url: '/submit_file',  // Endpoint where the form is submitted
+          url: '/submit_file',
           type: 'POST',
           data: formData,
-          processData: false,  // Tell jQuery not to process the data
-          contentType: false,  // Tell jQuery not to set content type, it's handled by FormData
+          processData: false,
+          contentType: false,
           success: function(response) {
-            // Redirect manually after successful upload
-            window.location.href = '/show_result'; // This handles the redirect
-          },
+           	if (response.redirect_url) {
+                // Redirect the browser to the new page
+                window.location.href = response.redirect_url;
+            } else {
+                alert('Error: No redirect URL provided by the server.');
+            }
+        },
           error: function(xhr, status, error) {
             console.error(error);
             alert("An error occurred during file upload.");

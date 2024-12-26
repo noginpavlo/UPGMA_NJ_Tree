@@ -10,6 +10,7 @@ import os
 import matplotlib.pyplot as plt
 from Bio import Phylo
 import matplotlib
+import uuid
 
 matplotlib.use('Agg')
 
@@ -35,16 +36,16 @@ class TreeBuilder:
                     temp_fasta.write(f">{seq.id}\n{seq.seq}\n")
                 temp_fasta_name = temp_fasta.name  # Save the temp file name
 
-            print(f"Temporary FASTA file created at: {temp_fasta_name}")
+            # print(f"Temporary FASTA file created at: {temp_fasta_name}")
         elif fasta_file:
             # Use the provided FASTA file directly
-            print("Elif statment triggered")
+            # print("Elif statment triggered")
             temp_fasta_name = fasta_file
-            print(f"Using provided FASTA file: {temp_fasta_name}")
+            # print(f"Using provided FASTA file: {temp_fasta_name}")
 
         # Run ClustalW to align the sequences
         output_aln = temp_fasta_name.replace('.fasta', '_aligned.aln')  # Define output file
-        print(f"Expected output alignment file: {output_aln}")
+        # print(f"Expected output alignment file: {output_aln}")
 
         clustal_command = [
             '/usr/bin/clustalw',
@@ -57,28 +58,28 @@ class TreeBuilder:
         try:
             subprocess.run(clustal_command, check=True)
         except subprocess.CalledProcessError as e:
-            print(f"Error running ClustalW: {e}")
+            # print(f"Error running ClustalW: {e}")
             return
 
         # Read the alignment from the generated .aln file
         try:
             alignment = AlignIO.read(output_aln, "clustal")
-            print("OUTPUT ALN !!!!!!!!!!!!")
-            print(output_aln)
-            print(type(output_aln))
+            # print("OUTPUT ALN !!!!!!!!!!!!")
+            # print(output_aln)
+            # print(type(output_aln))
 
         except FileNotFoundError:
-            print(f"Alignment file not found: {output_aln}")
+            # print(f"Alignment file not found: {output_aln}")
             return
         except Exception as e:
-            print(f"Error reading alignment file: {e}")
+            # print(f"Error reading alignment file: {e}")
             return
 
-        print(alignment)
+        # print(alignment)
         # Print the aligned sequences
-        print("Aligned Sequences:")
-        for record in alignment:
-            print(f"{record.id}: {record.seq}")
+        # print("Aligned Sequences:")
+        # for record in alignment:
+        #     print(f"{record.id}: {record.seq}")
 
         self.aligned_file = alignment
 
@@ -154,8 +155,8 @@ class TreeBuilder:
         calculator = DistanceCalculator("identity")
         distance_matrix = calculator.get_distance(self.aligned_file)
 
-        print("\nDissimilarity Matrix:")
-        print(distance_matrix)
+        # print("\nDissimilarity Matrix:")
+        # print(distance_matrix)
 
         self.dissimilarity_matrix = distance_matrix
 
@@ -195,7 +196,9 @@ class TreeBuilder:
 
         # If no output file is provided, use a default filename
         if output_file is None:
-            output_file = os.path.join(save_directory, f"tree.{output_format}")
+            # Generate a unique ID and use it to create a unique file name
+            unique_id = str(uuid.uuid4())
+            output_file = os.path.join(save_directory, f"tree_{unique_id}.{output_format}")
 
         # Remove internal node labels (set name to None)
         for clade in self.tree.find_clades():
@@ -206,7 +209,6 @@ class TreeBuilder:
         fig = plt.figure(figsize=(18, 12))
         ax = fig.add_subplot(1, 1, 1)
 
-
         Phylo.draw(self.tree, axes=ax, do_show=False,
                    branch_labels=lambda c: f"{c.branch_length:.3f}" if c.branch_length != 0 else None)
 
@@ -216,8 +218,12 @@ class TreeBuilder:
                 text.set_weight('bold')
                 text.set_color('red')
 
+        # Save the tree image
         plt.savefig(output_file, format=output_format, dpi=300)  # High resolution
-        print(f"Tree saved to {output_file} in {output_format} format.")
+        # print(f"Tree saved to {output_file} in {output_format} format.")
 
         # Close the figure to release memory and suppress GUI
         plt.close(fig)
+
+        # Return the unique ID
+        return unique_id

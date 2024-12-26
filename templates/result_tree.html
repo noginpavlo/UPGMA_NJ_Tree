@@ -33,10 +33,10 @@
                                 <h1 id="result-tree-heading">Result Tree</h1>
                             </header>
                             <span class="image main" id="result-tree-image">
-                                <img src="{{ url_for('static', filename='plots/tree.png') }}" alt="Tree Visualization" />
+                                <img src="{{ url_for('static', filename='plots/tree_' + unique_id + '.png') }}" alt="Phylogenetic Tree">
                             </span>
                             <!-- Download Button -->
-                            <a href="{{ url_for('static', filename='plots/tree.png') }}" class="button primary icon solid fa-download" download="tree.png">Download</a>
+                            <a href="{{ url_for('static', filename='plots/tree_' + unique_id + '.png') }}" class="button primary icon solid fa-download" download="tree.png">Download</a>
                             <a href="{{ url_for('home') }}" class="button">Home</a>
                             <hr class="major" />
                         </div>

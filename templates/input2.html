@@ -230,11 +230,16 @@
 							'sequence_data[]': messages
 						},
 						success: function(response) {
-							window.location.href = "/show_result"; // Redirect to result page on success
+							if (response.redirect_url) {
+								// Redirect the browser to the new page
+								window.location.href = response.redirect_url;
+							} else {
+								alert('Error: No redirect URL provided by the server.');
+							}
 						},
 						error: function(error) {
 							alert('Error occurred while submitting sequences.');
-						}
+									}
 					});
 				});
 			});
