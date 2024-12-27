@@ -46,11 +46,11 @@ function to perform futher calculations.
 Plans for 23-12-2024
 
 6. Basic functionality is complete. Things that are still needed to adress: 
---Make it calcualte things in a sepatrate thread!
---Consider adding user authentification.
+--Make it calcualte things in a sepatrate thread! NOT SURE
+--Consider adding user authentification. DISCARDED
 --Make the thing responcive.
 --Consider making the pic text of a different colour. DONE 
---Consider adding more things to show_result.html page. (Like dissimilarity matrix for example.)
+--Consider adding more things to show_result.html page. DISCARDED
 
 6.1 Perform general overview and plan some future changes.
 
@@ -58,3 +58,13 @@ Plans for 23-12-2024
 Plans for 26-12-2024
 
 7. Fix that f* buggggg. Revert to 6. Make some changes, if you have time.
+DONE
+
+Plans for 27-12-2024
+
+8. The website looks horable. Reconsider frontend.
+
+8.1 Change some elements's colors, introduce one more color. 
+8.2 Change arrows in carusel. Make carusel move automaticaly.
+
+
