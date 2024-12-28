@@ -68,3 +68,6 @@ Plans for 27-12-2024
 8.2 Change arrows in carusel. Make carusel move automaticaly.
 
 
+9. Redeployment.
+9.1 Make new Docker image. Change mode from developer to profduction.
+
