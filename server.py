@@ -1,12 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, url_for, jsonify
+from werkzeug.middleware.proxy_fix import ProxyFix
 from calculator_upgma import *
 
-app = Flask(__name__)
+
+app = Flask(__name__, static_folder='static', static_url_path='/static')
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
 calculator = TreeBuilder()
 
-
 # Configure upload folder
-UPLOAD_FOLDER = 'static/uploads'  # Directory to save uploaded files
+UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -131,5 +134,5 @@ def test_youtube():
     return render_template("test_youtube.html")
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.run(debug=False, ssl_context=('ssl/certificate.pem', 'ssl/private_key.pem'), host='0.0.0.0', port=5000)
