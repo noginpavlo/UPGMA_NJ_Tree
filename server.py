@@ -101,7 +101,7 @@ def submit_file():
         calculator.build_tree(method)
         unique_id = calculator.visualize_tree()
     else:
-        # Handle unsupported file types (optional)
+        # For unsupported file types
         return "Unsupported file type", 400
 
     if unique_id is None:
@@ -135,4 +135,4 @@ def test_youtube():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, ssl_context=('ssl/certificate.pem', 'ssl/private_key.pem'), host='0.0.0.0', port=5000)
+    app.run(debug=False)
